@@ -23,7 +23,7 @@ export default function Services() {
         "Boosts circulation and immune function",
         "Enhances mental clarity and focus"
       ],
-      image: "/generated/hero-ice-bath.png"
+      image: "/can-you-take-a-hot-shower-after-a-cold-plunge-510868.webp"
     },
     {
       icon: Droplets,
@@ -41,7 +41,7 @@ export default function Services() {
         "Enhanced cardiovascular conditioning",
         "Stress reduction and mental relaxation"
       ],
-      image: "/generated/hero-sauna.png"
+      image: "/infrared_sauna_vs_traditional_sauna-1024x768.webp"
     },
     {
       icon: Repeat,
@@ -59,7 +59,7 @@ export default function Services() {
         "Accelerates metabolic waste removal",
         "Elite-level recovery optimization"
       ],
-      image: "/public/CoreChill-Lifestyle.webp"
+      image: "/image1-3.webp"
     },
     {
       icon: Truck,
@@ -77,7 +77,7 @@ export default function Services() {
         "Custom session scheduling",
         "Complete safety and monitoring"
       ],
-      image: "/public/Ice-Baths-Sydney-1.jpg"
+      image: "/CoreChill-Lifestyle.webp"
     }
   ];
 
@@ -107,84 +107,269 @@ export default function Services() {
           </div>
         </section>
 
-        {services.map((service, index) => {
-          const Icon = service.icon;
-          const isEven = index % 2 === 0;
-          
-          return (
-            <section 
-              key={index} 
-              className={`py-20 ${isEven ? 'bg-background' : 'bg-card'}`}
-            >
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className={`grid lg:grid-cols-2 gap-12 items-center ${!isEven ? 'lg:grid-flow-dense' : ''}`}>
-                  <div className={`space-y-6 ${!isEven ? 'lg:col-start-2' : ''}`}>
-                    <div className={`${service.bgColor} w-16 h-16 rounded-sm flex items-center justify-center`}>
-                      <Icon className={`h-8 w-8 ${service.color}`} />
-                    </div>
-                    
-                    <div>
-                      <p className={`text-sm font-semibold ${service.color} uppercase tracking-wider mb-2`}>
-                        {service.tagline}
-                      </p>
-                      <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">
-                        {service.title}
-                      </h2>
-                      <p className="text-lg text-muted-foreground">
-                        {service.description}
-                      </p>
-                    </div>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+              <div className="relative h-[400px] rounded-sm overflow-hidden border border-primary/30">
+                <img 
+                  src="/can-you-take-a-hot-shower-after-a-cold-plunge-510868.webp" 
+                  alt="Ice Bath Therapy"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-primary/20"></div>
+              </div>
 
-                    <div className="flex gap-6 py-4">
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2">
-                          <Thermometer className={`h-5 w-5 ${service.color}`} />
-                          <span className="text-sm text-muted-foreground">Temperature</span>
-                        </div>
-                        <p className="text-xl font-display font-bold">{service.temperature}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2">
-                          <Clock className={`h-5 w-5 ${service.color}`} />
-                          <span className="text-sm text-muted-foreground">Duration</span>
-                        </div>
-                        <p className="text-xl font-display font-bold">{service.duration}</p>
-                      </div>
-                    </div>
+              <div className="space-y-6">
+                <div className={`${service.bgColor} w-16 h-16 rounded-sm flex items-center justify-center`}>
+                  <Icon className={`h-8 w-8 ${service.color}`} />
+                </div>
+                
+                <div>
+                  <p className={`text-sm font-semibold ${service.color} uppercase tracking-wider mb-2`}>
+                    {service.tagline}
+                  </p>
+                  <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">
+                    {service.title}
+                  </h2>
+                  <p className="text-lg text-muted-foreground">
+                    {service.description}
+                  </p>
+                </div>
 
-                    <div className="space-y-3 pt-4">
-                      <h3 className="text-xl font-display font-bold">Key Benefits</h3>
-                      {service.benefits.map((benefit, i) => (
-                        <div key={i} className="flex items-start space-x-3">
-                          <CheckCircle className={`h-5 w-5 ${service.color} flex-shrink-0 mt-0.5`} />
-                          <p className="text-muted-foreground">{benefit}</p>
-                        </div>
-                      ))}
+                <div className="flex gap-6 py-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Thermometer className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Temperature</span>
                     </div>
-
-                    <Link href="/booking">
-                      <Button 
-                        size="lg"
-                        className={`${service.color === 'text-primary' ? 'bg-primary hover:bg-primary/90' : 'bg-accent hover:bg-accent/90'} text-background font-semibold mt-6`}
-                      >
-                        Book {service.title}
-                      </Button>
-                    </Link>
+                    <p className="text-xl font-display font-bold">{service.temperature}</p>
                   </div>
-
-                  <div className={`relative h-[400px] lg:h-[500px] rounded-sm overflow-hidden border ${service.color === 'text-primary' ? 'border-primary/30' : 'border-accent/30'} ${!isEven ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                    <img 
-                      src={service.image}
-                      alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                    <div className={`absolute inset-0 ${service.color === 'text-primary' ? 'bg-primary/20' : 'bg-accent/20'}`}></div>
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Clock className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Duration</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.duration}</p>
                   </div>
                 </div>
+
+                <div className="space-y-3 pt-4">
+                  <h3 className="text-xl font-display font-bold">Key Benefits</h3>
+                  {service.benefits.map((benefit, i) => (
+                    <div key={i} className="flex items-start space-x-3">
+                      <CheckCircle className={`h-5 w-5 ${service.color} flex-shrink-0 mt-0.5`} />
+                      <p className="text-muted-foreground">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <Link href="/booking">
+                  <Button 
+                    size="lg"
+                    className={`${service.color === 'text-primary' ? 'bg-primary hover:bg-primary/90' : 'bg-accent hover:bg-accent/90'} text-background font-semibold mt-6`}
+                  >
+                    Book {service.title}
+                  </Button>
+                </Link>
               </div>
-            </section>
-          );
-        })}
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+              <div className="order-2 lg:order-1">
+                <div className={`${service.bgColor} w-16 h-16 rounded-sm flex items-center justify-center`}>
+                  <Icon className={`h-8 w-8 ${service.color}`} />
+                </div>
+                
+                <div>
+                  <p className={`text-sm font-semibold ${service.color} uppercase tracking-wider mb-2`}>
+                    {service.tagline}
+                  </p>
+                  <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">
+                    {service.title}
+                  </h2>
+                  <p className="text-lg text-muted-foreground">
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="flex gap-6 py-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Thermometer className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Temperature</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.temperature}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Clock className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Duration</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.duration}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-4">
+                  <h3 className="text-xl font-display font-bold">Key Benefits</h3>
+                  {service.benefits.map((benefit, i) => (
+                    <div key={i} className="flex items-start space-x-3">
+                      <CheckCircle className={`h-5 w-5 ${service.color} flex-shrink-0 mt-0.5`} />
+                      <p className="text-muted-foreground">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <Link href="/booking">
+                  <Button 
+                    size="lg"
+                    className={`${service.color === 'text-primary' ? 'bg-primary hover:bg-primary/90' : 'bg-accent hover:bg-accent/90'} text-background font-semibold mt-6`}
+                  >
+                    Book {service.title}
+                  </Button>
+                </Link>
+              </div>
+              
+              <div className="relative h-[400px] rounded-sm overflow-hidden border border-accent/30 order-1 lg:order-2">
+                <img 
+                  src="/infrared_sauna_vs_traditional_sauna-1024x768.webp" 
+                  alt="Steam Sauna"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-accent/20"></div>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+              <div className="relative h-[400px] rounded-sm overflow-hidden border border-primary/30">
+                <img 
+                  src="/image1-3.webp" 
+                  alt="Contrast Therapy"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20"></div>
+              </div>
+
+              <div className="space-y-6">
+                <div className={`${service.bgColor} w-16 h-16 rounded-sm flex items-center justify-center`}>
+                  <Icon className={`h-8 w-8 ${service.color}`} />
+                </div>
+                
+                <div>
+                  <p className={`text-sm font-semibold ${service.color} uppercase tracking-wider mb-2`}>
+                    {service.tagline}
+                  </p>
+                  <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">
+                    {service.title}
+                  </h2>
+                  <p className="text-lg text-muted-foreground">
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="flex gap-6 py-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Thermometer className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Temperature</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.temperature}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Clock className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Duration</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.duration}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-4">
+                  <h3 className="text-xl font-display font-bold">Key Benefits</h3>
+                  {service.benefits.map((benefit, i) => (
+                    <div key={i} className="flex items-start space-x-3">
+                      <CheckCircle className={`h-5 w-5 ${service.color} flex-shrink-0 mt-0.5`} />
+                      <p className="text-muted-foreground">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <Link href="/booking">
+                  <Button 
+                    size="lg"
+                    className={`${service.color === 'text-primary' ? 'bg-primary hover:bg-primary/90' : 'bg-accent hover:bg-accent/90'} text-background font-semibold mt-6`}
+                  >
+                    Book {service.title}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-6">
+                <div className={`${service.bgColor} w-16 h-16 rounded-sm flex items-center justify-center`}>
+                  <Icon className={`h-8 w-8 ${service.color}`} />
+                </div>
+                
+                <div>
+                  <p className={`text-sm font-semibold ${service.color} uppercase tracking-wider mb-2`}>
+                    {service.tagline}
+                  </p>
+                  <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">
+                    {service.title}
+                  </h2>
+                  <p className="text-lg text-muted-foreground">
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="flex gap-6 py-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Thermometer className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Temperature</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.temperature}</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center space-x-2">
+                      <Clock className={`h-5 w-5 ${service.color}`} />
+                      <span className="text-sm text-muted-foreground">Duration</span>
+                    </div>
+                    <p className="text-xl font-display font-bold">{service.duration}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-4">
+                  <h3 className="text-xl font-display font-bold">Key Benefits</h3>
+                  {service.benefits.map((benefit, i) => (
+                    <div key={i} className="flex items-start space-x-3">
+                      <CheckCircle className={`h-5 w-5 ${service.color} flex-shrink-0 mt-0.5`} />
+                      <p className="text-muted-foreground">{benefit}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <Link href="/booking">
+                  <Button 
+                    size="lg"
+                    className={`${service.color === 'text-primary' ? 'bg-primary hover:bg-primary/90' : 'bg-accent hover:bg-accent/90'} text-background font-semibold mt-6`}
+                  >
+                    Book {service.title}
+                  </Button>
+                </Link>
+              </div>
+              
+              <div className="relative h-[400px] rounded-sm overflow-hidden border border-muted">
+                <img 
+                  src="/CoreChill-Lifestyle.webp" 
+                  alt="Mobile Recovery Unit"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-background/40"></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="py-20 bg-card">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

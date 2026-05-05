@@ -16,14 +16,16 @@ export function Navigation() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="text-2xl font-display font-bold tracking-tight">
-              <span className="text-primary">Cryo</span>
-              <span className="text-accent">Revive</span>
-            </div>
+          <Link href="/" className="flex items-center gap-3">
+            <img 
+              src="/ChatGPT_Image_May_16_2025_05_08_10_PM.png" 
+              alt="CryoRevive Logo" 
+              className="h-10 w-auto"
+            />
+            <span className="text-xl font-display font-bold">CryoRevive</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
