@@ -1,6 +1,6 @@
 ---
 title: Services Page
-status: todo
+status: in_progress
 priority: high
 type: feature
 tags: [services, content]
@@ -13,13 +13,13 @@ position: 2
 Detailed service pages for ice bath therapy, steam sauna, contrast therapy, mobile recovery unit. Each service needs benefits, specs (temperature, duration), visual representation.
 
 ## Checklist
-- [ ] Create services/index.tsx page
-- [ ] Ice Bath section (benefits, -10°C to 4°C range, 3-15min duration)
-- [ ] Steam Sauna section (muscle relaxation, detox, 60-90°C, 15-20min)
-- [ ] Contrast Therapy section (hot/cold cycles, protocol details)
-- [ ] Mobile Recovery Unit section (on-site services for gyms/events)
-- [ ] Generate service-specific images
-- [ ] Add temperature data visualizations
+- [x] Create /services page with full service details
+- [x] Ice Bath section: temperature range, duration, benefits list
+- [x] Steam Sauna section: heat specs, relaxation benefits
+- [x] Contrast Therapy section: protocol explanation
+- [x] Mobile Recovery Unit: on-site service details
+- [x] Add service images and temperature indicators
+- [x] CTA to booking on each service
 
 ## Acceptance
 - All 4 services clearly explained with specs
