@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function Contact() {
   return (
@@ -265,13 +266,14 @@ export default function Contact() {
             <p className="text-lg text-muted-foreground mb-8">
               Book your first session and experience elite athlete recovery.
             </p>
-            <Button 
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-              asChild
-            >
-              <a href="/booking">Book Now</a>
-            </Button>
+            <Link href="/booking">
+              <Button 
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+              >
+                Book Now
+              </Button>
+            </Link>
           </div>
         </section>
       </main>
