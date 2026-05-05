@@ -1,12 +1,24 @@
-import React from 'react'
+import { Navigation } from "@/components/Navigation";
+import { Hero } from "@/components/Hero";
+import { Benefits } from "@/components/Benefits";
+import { ServicesOverview } from "@/components/ServicesOverview";
+import { TestimonialsPreview } from "@/components/TestimonialsPreview";
+import { SEO } from "@/components/SEO";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-foreground">Hello World</h1>
-        <p className="text-lg text-muted-foreground">This is going to be your softgen app, start by describing your project.</p>
-      </div>
-    </main>
-  )
+    <>
+      <SEO 
+        title="CryoRevive - Elite Athlete Recovery | Ice Bath & Sauna Therapy"
+        description="Science-backed cold plunge, steam sauna, and contrast therapy for athletes. Accelerate recovery, reduce inflammation, and optimize performance."
+      />
+      <Navigation />
+      <main>
+        <Hero />
+        <Benefits />
+        <ServicesOverview />
+        <TestimonialsPreview />
+      </main>
+    </>
+  );
 }
