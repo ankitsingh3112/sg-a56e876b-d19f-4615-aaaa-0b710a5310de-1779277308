@@ -16,13 +16,13 @@ Set up complete design system (colors, fonts, component theming) + build homepag
 - [x] Convert hex colors to HSL via terminal
 - [x] Set up globals.css with dark theme color tokens
 - [x] Configure tailwind.config.ts with Rajdhani + Rubik fonts
-- [ ] Create Navigation component (sticky, minimal)
-- [ ] Build Hero section: "Recover Harder. Come Back Stronger." + CTA
-- [ ] Generate hero image (ice bath/sauna contrast concept)
-- [ ] Create Benefits section (3 cards: faster recovery, reduced inflammation, improved performance)
-- [ ] Create Services overview section (4 services with icons)
-- [ ] Add Testimonials preview (2-3 athlete quotes)
-- [ ] Theme Button component variants (primary=blue, accent=orange)
+- [x] Create Navigation component (sticky, minimal)
+- [x] Build Hero section: "Recover Harder. Come Back Stronger." + CTA
+- [x] Generate hero image (ice bath/sauna contrast concept)
+- [x] Create Benefits section (3 cards: faster recovery, reduced inflammation, improved performance)
+- [x] Create Services overview section (4 services with icons)
+- [x] Add Testimonials preview (2-3 athlete quotes)
+- [x] Theme Button component variants (primary=blue, accent=orange)
 
 ## Acceptance
 - Homepage loads with dark theme, high contrast, clear "Book Now" CTA

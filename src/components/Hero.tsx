@@ -78,10 +78,24 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="relative lg:h-[600px] h-[400px]">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-sm"></div>
-            <div className="absolute inset-4 border border-primary/30 rounded-sm flex items-center justify-center">
-              <p className="text-muted-foreground text-sm">Hero Image: Ice Bath + Sauna Contrast</p>
+          <div className="relative lg:h-[600px] h-[400px] rounded-sm overflow-hidden border border-primary/30">
+            <div className="absolute inset-0 grid grid-cols-2">
+              <div className="relative">
+                <img 
+                  src="/generated/hero-ice-bath.png" 
+                  alt="Ice Bath Therapy Chamber"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-primary/20"></div>
+              </div>
+              <div className="relative">
+                <img 
+                  src="/generated/hero-sauna.png" 
+                  alt="Steam Sauna Interior"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-accent/20"></div>
+              </div>
             </div>
           </div>
         </div>
