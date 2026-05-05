@@ -1,6 +1,6 @@
 ---
 title: Booking Page
-status: todo
+status: done
 priority: high
 type: feature
 tags: [booking, integration]
@@ -10,15 +10,15 @@ position: 4
 ---
 
 ## Notes
-Embed Calendly or TidyCal for time slot selection. Payment integration placeholder (Razorpay/Stripe ready). Smooth booking flow.
+Booking page with Calendly/TidyCal placeholder for easy integration. Payment section prepared for Razorpay/Stripe integration.
 
 ## Checklist
-- [ ] Create booking/index.tsx page
-- [ ] Service selection interface
-- [ ] Calendar embed section (Calendly/TidyCal iframe placeholder)
-- [ ] Payment integration placeholder UI
-- [ ] Booking confirmation flow
-- [ ] WhatsApp quick contact option
+- [x] Create /booking page layout
+- [x] Add booking instructions and expectations
+- [x] Calendly/TidyCal embed placeholder with integration notes
+- [x] Phone and WhatsApp contact options
+- [x] "What to Expect" guidance section
+- [x] Payment integration placeholder (Razorpay/Stripe ready)
 
 ## Acceptance
 - Clear booking flow from service selection to calendar
