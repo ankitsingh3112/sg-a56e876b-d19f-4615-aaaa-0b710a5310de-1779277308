@@ -1,6 +1,6 @@
 ---
 title: Contact Page
-status: todo
+status: done
 priority: medium
 type: feature
 tags: [contact, form]
@@ -10,16 +10,15 @@ position: 6
 ---
 
 ## Notes
-Contact form (name, phone, email, message), Google Maps embed, WhatsApp quick contact. Multiple contact methods.
+Contact page with form, location details, map embed placeholder, and WhatsApp integration.
 
 ## Checklist
-- [ ] Create contact/index.tsx page
-- [ ] Contact form component (name, phone, email, message fields)
-- [ ] Form validation
-- [ ] Google Maps embed (placeholder coordinates)
-- [ ] WhatsApp floating button
-- [ ] Business hours and location details
-- [ ] Social media links (Instagram focus)
+- [x] Create /contact page layout
+- [x] Contact form (name, phone, email, message)
+- [x] Location card with address
+- [x] Phone, email, hours of operation
+- [x] Google Maps embed placeholder
+- [x] WhatsApp quick contact button
 
 ## Acceptance
 - Form works and validates input

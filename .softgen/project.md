@@ -22,10 +22,10 @@ Typography:
 Style: High contrast, sharp angles, minimal chrome, data-viz temperature indicators, focused CTAs. Content-forward layout with generous whitespace around action points.
 
 ## Features
-- Homepage: Hero + benefits + services overview + testimonials preview
-- Services: Ice bath, steam sauna, contrast therapy, mobile unit
-- Pricing: Single sessions, memberships, athlete packages
-- Booking: Embedded calendar (Calendly/TidyCal)
-- Testimonials: Athlete stories, ratings
-- Contact: Form, map, WhatsApp
-- Blog: Recovery science articles
+- Homepage: Hero + benefits + services overview + testimonials preview ✓
+- Services: Ice bath, steam sauna, contrast therapy, mobile unit ✓
+- Pricing: Single sessions, memberships, athlete packages ✓
+- Booking: Embedded calendar (Calendly/TidyCal) ✓
+- Testimonials: Athlete stories, ratings ✓
+- Contact: Form, map, WhatsApp ✓
+- Blog: Recovery science articles ✓

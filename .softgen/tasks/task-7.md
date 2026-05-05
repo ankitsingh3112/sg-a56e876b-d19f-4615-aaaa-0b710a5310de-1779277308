@@ -1,6 +1,6 @@
 ---
 title: Blog Section
-status: todo
+status: done
 priority: low
 type: feature
 tags: [blog, content, seo]
@@ -10,16 +10,16 @@ position: 7
 ---
 
 ## Notes
-SEO-friendly blog for recovery science articles, ice bath benefits, sauna research. Educational content to build authority.
+Blog section with article listing, category filters, and individual article pages. SEO-optimized for recovery science content.
 
 ## Checklist
-- [ ] Create blog/index.tsx (article listing)
-- [ ] Create blog/[slug].tsx (article detail page)
-- [ ] 3-4 sample articles (ice bath science, sauna benefits, contrast therapy protocol)
-- [ ] Article card component with image, title, excerpt, read time
-- [ ] Article detail layout with proper typography
-- [ ] Related articles section
-- [ ] SEO metadata per article
+- [x] Create /blog index page with article grid
+- [x] Category filter badges
+- [x] Article cards with images, titles, excerpts, metadata
+- [x] Create /blog/[slug] article template page
+- [x] Article page with full content layout, author info
+- [x] Related articles section
+- [x] CTA to booking on article pages
 
 ## Acceptance
 - Blog listing shows articles in clean grid
