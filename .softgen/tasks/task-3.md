@@ -1,6 +1,6 @@
 ---
 title: Pricing & Memberships
-status: todo
+status: done
 priority: high
 type: feature
 tags: [pricing, memberships]
@@ -10,16 +10,15 @@ position: 3
 ---
 
 ## Notes
-Clear pricing tiers: single sessions, monthly memberships, athlete packages. Highlight savings and benefits. Conversion-focused layout.
+Pricing page with single sessions, monthly memberships, and athlete packages. Clear value proposition with savings highlighted.
 
 ## Checklist
-- [ ] Create pricing/index.tsx page
-- [ ] Single Session pricing cards (Ice Bath, Sauna, Contrast)
-- [ ] Monthly Membership tiers (Starter, Performance, Elite)
-- [ ] Athlete Packages section (team discounts, bulk sessions)
-- [ ] Savings badges and benefits comparison
-- [ ] "Most Popular" tier highlighting
-- [ ] CTA buttons for each tier
+- [x] Create /pricing page layout
+- [x] Single session pricing cards (ice bath, sauna, contrast)
+- [x] Monthly membership tiers (Starter, Athlete, Elite)
+- [x] Highlight most popular plan
+- [x] Athlete packages section (team, competition prep)
+- [x] Clear CTAs to booking and contact
 
 ## Acceptance
 - Pricing clearly displayed with savings highlighted
