@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { LogOut, Search, Calendar, Users, DollarSign, TrendingUp, Eye, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { LogOut, Search, Calendar, Users, DollarSign, TrendingUp, Eye, CheckCircle2, XCircle, Clock, Settings } from "lucide-react";
 
 type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";
 
@@ -29,6 +29,14 @@ interface Booking {
   paymentId?: string;
 }
 
+interface PricingTier {
+  name: string;
+  minAthletes: number;
+  maxAthletes: number;
+  basePrice: number;
+  perAthletePrice: number;
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -37,6 +45,11 @@ export default function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>([
+    { name: "Small Events", minAthletes: 0, maxAthletes: 99, basePrice: 10000, perAthletePrice: 799 },
+    { name: "Medium Events", minAthletes: 100, maxAthletes: 499, basePrice: 10000, perAthletePrice: 499 },
+    { name: "Large Events", minAthletes: 500, maxAthletes: 10000, basePrice: 5000, perAthletePrice: 399 }
+  ]);
 
   useEffect(() => {
     const auth = localStorage.getItem("admin_authenticated");
@@ -45,6 +58,7 @@ export default function AdminDashboard() {
     } else {
       setIsAuthenticated(true);
       loadBookings();
+      loadPricing();
     }
   }, [router]);
 
@@ -55,6 +69,23 @@ export default function AdminDashboard() {
       setBookings(data);
       setFilteredBookings(data);
     }
+  };
+
+  const loadPricing = () => {
+    const stored = localStorage.getItem("pricing_tiers");
+    if (stored) {
+      setPricingTiers(JSON.parse(stored));
+    } else {
+      // Save default pricing
+      localStorage.setItem("pricing_tiers", JSON.stringify(pricingTiers));
+    }
+  };
+
+  const updatePricingTier = (index: number, field: keyof PricingTier, value: number) => {
+    const updated = [...pricingTiers];
+    updated[index] = { ...updated[index], [field]: value };
+    setPricingTiers(updated);
+    localStorage.setItem("pricing_tiers", JSON.stringify(updated));
   };
 
   useEffect(() => {
@@ -188,6 +219,76 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Pricing Management */}
+          <Card className="mb-6">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    <Settings className="w-5 h-5" />
+                    Event Pricing Configuration
+                  </CardTitle>
+                  <CardDescription>Set tiered pricing based on athlete count</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {pricingTiers.map((tier, index) => (
+                  <Card key={index} className="bg-muted/50">
+                    <CardContent className="p-4">
+                      <div className="grid md:grid-cols-4 gap-4">
+                        <div>
+                          <Label className="text-sm font-semibold mb-2 block">{tier.name}</Label>
+                          <p className="text-xs text-muted-foreground">
+                            {tier.minAthletes} - {tier.maxAthletes === 10000 ? "500+" : tier.maxAthletes} athletes
+                          </p>
+                        </div>
+                        <div>
+                          <Label htmlFor={`base-${index}`} className="text-xs text-muted-foreground">Base Price</Label>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">₹</span>
+                            <Input
+                              id={`base-${index}`}
+                              type="number"
+                              value={tier.basePrice}
+                              onChange={(e) => updatePricingTier(index, "basePrice", parseInt(e.target.value))}
+                              className="h-9"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <Label htmlFor={`per-athlete-${index}`} className="text-xs text-muted-foreground">Per Athlete</Label>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm">₹</span>
+                            <Input
+                              id={`per-athlete-${index}`}
+                              type="number"
+                              value={tier.perAthletePrice}
+                              onChange={(e) => updatePricingTier(index, "perAthletePrice", parseInt(e.target.value))}
+                              className="h-9"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex items-end">
+                          <div className="text-sm">
+                            <span className="text-muted-foreground">Example (50 athletes):</span>
+                            <p className="font-semibold text-primary">
+                              ₹{(tier.basePrice + (50 * tier.perAthletePrice)).toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+                <p className="text-xs text-muted-foreground">
+                  Pricing changes apply immediately to new bookings. Contact form will use these rates.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Filters */}
           <Card className="mb-6">

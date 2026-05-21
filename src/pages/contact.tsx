@@ -111,9 +111,44 @@ export default function Contact() {
 
   const calculateAmount = () => {
     const athleteCount = parseInt(expectedAthletes) || 0;
-    const basePrice = 5000;
-    const perAthletePrice = 500;
-    return basePrice + (athleteCount * perAthletePrice);
+    
+    // Load pricing tiers from admin settings
+    const pricingTiers = JSON.parse(localStorage.getItem("pricing_tiers") || JSON.stringify([
+      { minAthletes: 0, maxAthletes: 99, basePrice: 10000, perAthletePrice: 799 },
+      { minAthletes: 100, maxAthletes: 499, basePrice: 10000, perAthletePrice: 499 },
+      { minAthletes: 500, maxAthletes: 10000, basePrice: 5000, perAthletePrice: 399 }
+    ]));
+
+    // Find applicable tier
+    const tier = pricingTiers.find((t: any) => 
+      athleteCount >= t.minAthletes && athleteCount <= t.maxAthletes
+    );
+
+    if (!tier) return 0;
+
+    return tier.basePrice + (athleteCount * tier.perAthletePrice);
+  };
+
+  const getPricingBreakdown = () => {
+    const athleteCount = parseInt(expectedAthletes) || 0;
+    
+    const pricingTiers = JSON.parse(localStorage.getItem("pricing_tiers") || JSON.stringify([
+      { minAthletes: 0, maxAthletes: 99, basePrice: 10000, perAthletePrice: 799 },
+      { minAthletes: 100, maxAthletes: 499, basePrice: 10000, perAthletePrice: 499 },
+      { minAthletes: 500, maxAthletes: 10000, basePrice: 5000, perAthletePrice: 399 }
+    ]));
+
+    const tier = pricingTiers.find((t: any) => 
+      athleteCount >= t.minAthletes && athleteCount <= t.maxAthletes
+    );
+
+    if (!tier) return null;
+
+    return {
+      basePrice: tier.basePrice,
+      perAthletePrice: tier.perAthletePrice,
+      athleteCount: athleteCount
+    };
   };
 
   return (
@@ -335,17 +370,24 @@ export default function Contact() {
                         {expectedAthletes && (
                           <Card className="bg-primary/5 border-primary/20">
                             <CardContent className="p-4">
-                              <p className="text-sm text-muted-foreground">
-                                <strong className="text-foreground">Estimated Cost:</strong>
-                                <br />
-                                Base Event Fee: ₹5,000
-                                <br />
-                                Per Athlete (×{expectedAthletes}): ₹{parseInt(expectedAthletes) * 500}
-                                <br />
-                                <span className="text-lg font-bold text-primary">
-                                  Total: ₹{calculateAmount().toLocaleString('en-IN')}
-                                </span>
-                              </p>
+                              {(() => {
+                                const breakdown = getPricingBreakdown();
+                                if (!breakdown) return null;
+                                
+                                return (
+                                  <p className="text-sm text-muted-foreground">
+                                    <strong className="text-foreground">Estimated Cost:</strong>
+                                    <br />
+                                    Base Event Fee: ₹{breakdown.basePrice.toLocaleString('en-IN')}
+                                    <br />
+                                    Per Athlete (₹{breakdown.perAthletePrice} × {breakdown.athleteCount}): ₹{(breakdown.perAthletePrice * breakdown.athleteCount).toLocaleString('en-IN')}
+                                    <br />
+                                    <span className="text-lg font-bold text-primary">
+                                      Total: ₹{calculateAmount().toLocaleString('en-IN')}
+                                    </span>
+                                  </p>
+                                );
+                              })()}
                             </CardContent>
                           </Card>
                         )}
