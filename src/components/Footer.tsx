@@ -13,7 +13,10 @@ export function Footer() {
                 alt="CryoRevive by Livnexa Logo" 
                 className="h-10 w-auto"
               />
-              <span className="text-xl font-display font-bold">CryoRevive by Livnexa</span>
+              <div className="flex flex-col">
+                <span className="text-xl font-display font-bold leading-tight">CryoRevive</span>
+                <span className="text-xs italic font-normal text-muted-foreground">by Livnexa</span>
+              </div>
             </div>
             <p className="text-sm text-muted-foreground">
               Elite recovery facility for athletes. Cold plunge, steam sauna, and contrast therapy.

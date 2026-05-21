@@ -38,7 +38,10 @@ export function Navigation() {
               alt="CryoRevive by Livnexa Logo" 
               className="h-10 w-auto"
             />
-            <span className="text-xl font-display font-bold">CryoRevive by Livnexa</span>
+            <div className="flex flex-col">
+              <span className="text-xl font-display font-bold leading-tight">CryoRevive</span>
+              <span className="text-xs italic font-normal text-muted-foreground">by Livnexa</span>
+            </div>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
