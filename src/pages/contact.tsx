@@ -36,6 +36,7 @@ export default function Contact() {
   const [expectedAthletes, setExpectedAthletes] = useState("");
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [eventDate, setEventDate] = useState<Date>();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem("current_user");
@@ -44,9 +45,13 @@ export default function Contact() {
     }
   }, []);
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (isProcessing) return;
+    
+    setIsProcessing(true);
+
     const bookingData = {
       id: Date.now().toString(),
       eventName: (e.target as any).eventName.value,
@@ -65,48 +70,122 @@ export default function Contact() {
       userId: currentUser?.id || null
     };
 
-    // Razorpay Integration
-    const options = {
-      key: "YOUR_RAZORPAY_KEY_ID", // Replace with actual Razorpay key
-      amount: bookingData.totalAmount * 100,
-      currency: "INR",
-      name: "CryoRevive by Livnexa",
-      description: `Event Recovery Session - ${bookingData.eventName}`,
-      image: "/favicon.ico",
-      handler: function (response: any) {
-        // Save booking to localStorage
-        const allBookings = JSON.parse(localStorage.getItem("bookings") || "[]");
-        allBookings.push({
-          ...bookingData,
-          paymentId: response.razorpay_payment_id,
-          status: "confirmed"
-        });
-        localStorage.setItem("bookings", JSON.stringify(allBookings));
-        
-        alert(`Payment successful! Booking confirmed. Payment ID: ${response.razorpay_payment_id}`);
-        
-        // Redirect to account if logged in, otherwise show success
-        if (currentUser) {
-          window.location.href = "/account";
-        }
-      },
-      prefill: {
-        name: bookingData.organizerName,
-        email: bookingData.organizerEmail,
-        contact: bookingData.organizerPhone
-      },
-      notes: {
-        event_name: bookingData.eventName,
-        event_date: bookingData.eventDate,
-        athletes: bookingData.athleteCount.toString()
-      },
-      theme: {
-        color: "#33B5E5"
-      }
-    };
+    try {
+      // Step 1: Create Razorpay order
+      const orderResponse = await fetch("/api/create-order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: bookingData.totalAmount * 100, // Convert to paise
+          currency: "INR",
+          receipt: `receipt_${bookingData.id}`,
+        }),
+      });
 
-    const rzp = new (window as any).Razorpay(options);
-    rzp.open();
+      if (!orderResponse.ok) {
+        const error = await orderResponse.json();
+        throw new Error(error.error || "Failed to create order");
+      }
+
+      const orderData = await orderResponse.json();
+
+      // Step 2: Open Razorpay checkout
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: "CryoRevive by Livnexa",
+        description: `Event Recovery Session - ${bookingData.eventName}`,
+        image: "/favicon.ico",
+        order_id: orderData.orderId,
+        handler: async function (response: any) {
+          try {
+            // Step 3: Verify payment signature
+            const verifyResponse = await fetch("/api/verify-payment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+
+            const verifyData = await verifyResponse.json();
+
+            if (verifyData.success) {
+              // Step 4: Save booking after successful verification
+              const allBookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+              allBookings.push({
+                ...bookingData,
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+                status: "confirmed"
+              });
+              localStorage.setItem("bookings", JSON.stringify(allBookings));
+              
+              alert(`Payment successful! Booking confirmed.\nPayment ID: ${response.razorpay_payment_id}`);
+              
+              // Redirect to account if logged in
+              if (currentUser) {
+                window.location.href = "/account";
+              } else {
+                // Reset form
+                (e.target as any).reset();
+                setEventDate(undefined);
+                setEventType("");
+                setSelectedDay("");
+                setSelectedTime("");
+                setExpectedAthletes("");
+              }
+            } else {
+              alert("Payment verification failed. Please contact support.");
+            }
+          } catch (error) {
+            console.error("Verification error:", error);
+            alert("Payment verification failed. Please contact support with your payment ID: " + response.razorpay_payment_id);
+          } finally {
+            setIsProcessing(false);
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            setIsProcessing(false);
+            alert("Payment cancelled. Your booking was not completed.");
+          }
+        },
+        prefill: {
+          name: bookingData.organizerName,
+          email: bookingData.organizerEmail,
+          contact: bookingData.organizerPhone
+        },
+        notes: {
+          event_name: bookingData.eventName,
+          event_date: bookingData.eventDate,
+          athletes: bookingData.athleteCount.toString()
+        },
+        theme: {
+          color: "#33B5E5"
+        }
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      
+      rzp.on('payment.failed', function (response: any) {
+        setIsProcessing(false);
+        alert(`Payment failed: ${response.error.description}`);
+      });
+      
+      rzp.open();
+    } catch (error: any) {
+      setIsProcessing(false);
+      console.error("Payment error:", error);
+      alert(error.message || "Failed to initiate payment. Please try again.");
+    }
   };
 
   const calculateAmount = () => {
@@ -395,9 +474,10 @@ export default function Contact() {
                         <Button 
                           type="submit"
                           size="lg"
-                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                          disabled={isProcessing}
+                          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold disabled:opacity-50"
                         >
-                          Proceed to Payment (Razorpay)
+                          {isProcessing ? "Processing..." : "Proceed to Payment"}
                         </Button>
 
                         <p className="text-xs text-muted-foreground text-center">
