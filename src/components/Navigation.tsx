@@ -1,10 +1,23 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, User } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      const user = localStorage.getItem("current_user");
+      setIsLoggedIn(!!user);
+    };
+    
+    checkAuth();
+    window.addEventListener("storage", checkAuth);
+    
+    return () => window.removeEventListener("storage", checkAuth);
+  }, []);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -38,6 +51,20 @@ export function Navigation() {
                 {link.label}
               </Link>
             ))}
+            {isLoggedIn ? (
+              <Link href="/account">
+                <Button variant="outline" size="sm">
+                  <User className="w-4 h-4 mr-2" />
+                  My Account
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/login">
+                <Button variant="outline" size="sm">
+                  Login
+                </Button>
+              </Link>
+            )}
             <Link href="/booking">
               <Button variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                 Book Now
@@ -71,6 +98,20 @@ export function Navigation() {
                 {link.label}
               </Link>
             ))}
+            {isLoggedIn ? (
+              <Link href="/account" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" className="w-full">
+                  <User className="w-4 h-4 mr-2" />
+                  My Account
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                <Button variant="outline" className="w-full">
+                  Login
+                </Button>
+              </Link>
+            )}
             <Link href="/booking" onClick={() => setMobileMenuOpen(false)}>
               <Button variant="default" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                 Book Now
