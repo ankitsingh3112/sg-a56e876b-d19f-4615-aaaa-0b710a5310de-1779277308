@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,47 +29,70 @@ export default function Contact() {
   const [selectedTime, setSelectedTime] = useState("");
   const [eventType, setEventType] = useState("");
   const [expectedAthletes, setExpectedAthletes] = useState("");
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("current_user");
+    if (user) {
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
 
   const handleBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const formData = {
+    const bookingData = {
+      id: Date.now().toString(),
       eventName: (e.target as any).eventName.value,
       eventType,
       eventDate: (e.target as any).eventDate.value,
-      eventLocation: (e.target as any).eventLocation.value,
-      expectedAthletes,
-      selectedDay,
-      selectedTime,
+      eventTime: selectedTime,
+      location: (e.target as any).eventLocation.value,
+      athleteCount: parseInt(expectedAthletes),
       organizerName: (e.target as any).organizerName.value,
       organizerPhone: (e.target as any).organizerPhone.value,
       organizerEmail: (e.target as any).organizerEmail.value,
       specialRequirements: (e.target as any).specialRequirements.value,
-      amount: calculateAmount()
+      totalAmount: calculateAmount(),
+      status: "pending",
+      createdAt: new Date().toISOString(),
+      userId: currentUser?.id || null
     };
 
     // Razorpay Integration
     const options = {
       key: "YOUR_RAZORPAY_KEY_ID", // Replace with actual Razorpay key
-      amount: formData.amount * 100, // Razorpay expects amount in paise
+      amount: bookingData.totalAmount * 100,
       currency: "INR",
       name: "CryoRevive",
-      description: `Event Recovery Session - ${formData.eventName}`,
+      description: `Event Recovery Session - ${bookingData.eventName}`,
       image: "/favicon.ico",
       handler: function (response: any) {
-        alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-        // Send booking confirmation email with payment details
-        console.log("Booking confirmed:", { ...formData, paymentId: response.razorpay_payment_id });
+        // Save booking to localStorage
+        const allBookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+        allBookings.push({
+          ...bookingData,
+          paymentId: response.razorpay_payment_id,
+          status: "confirmed"
+        });
+        localStorage.setItem("bookings", JSON.stringify(allBookings));
+        
+        alert(`Payment successful! Booking confirmed. Payment ID: ${response.razorpay_payment_id}`);
+        
+        // Redirect to account if logged in, otherwise show success
+        if (currentUser) {
+          window.location.href = "/account";
+        }
       },
       prefill: {
-        name: formData.organizerName,
-        email: formData.organizerEmail,
-        contact: formData.organizerPhone
+        name: bookingData.organizerName,
+        email: bookingData.organizerEmail,
+        contact: bookingData.organizerPhone
       },
       notes: {
-        event_name: formData.eventName,
-        event_date: formData.eventDate,
-        athletes: formData.expectedAthletes
+        event_name: bookingData.eventName,
+        event_date: bookingData.eventDate,
+        athletes: bookingData.athleteCount.toString()
       },
       theme: {
         color: "#33B5E5"
@@ -81,7 +105,7 @@ export default function Contact() {
 
   const calculateAmount = () => {
     const athleteCount = parseInt(expectedAthletes) || 0;
-    const basePrice = 5000; // Base event booking fee
+    const basePrice = 5000;
     const perAthletePrice = 500;
     return basePrice + (athleteCount * perAthletePrice);
   };
@@ -485,6 +509,7 @@ export default function Contact() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
