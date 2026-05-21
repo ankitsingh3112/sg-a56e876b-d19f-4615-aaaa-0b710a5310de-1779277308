@@ -1,6 +1,6 @@
 ---
 title: User Authentication & Booking History
-status: in_progress
+status: done
 priority: high
 type: feature
 tags: [auth, users, dashboard]
@@ -13,13 +13,13 @@ position: 9
 Build user authentication system so users can create accounts, log in, and view their booking history and upcoming event recovery sessions.
 
 ## Checklist
-- [ ] Create user login page at /login
-- [ ] Create user signup page at /signup
-- [ ] Create user dashboard at /account
-- [ ] Update navigation with login/account links
-- [ ] Add admin link to footer
-- [ ] Update contact form to link bookings to user accounts
-- [ ] Run check_for_errors
+- [x] Create user login page at /login
+- [x] Create user signup page at /signup
+- [x] Create user dashboard at /account
+- [x] Update navigation with login/account links
+- [x] Add admin link to footer
+- [x] Update contact form to link bookings to user accounts
+- [x] Run check_for_errors
 
 ## Acceptance
 - Users can sign up and log in
