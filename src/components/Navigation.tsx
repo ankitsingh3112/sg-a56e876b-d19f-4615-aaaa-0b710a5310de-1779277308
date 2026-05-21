@@ -35,10 +35,10 @@ export function Navigation() {
           <Link href="/" className="flex items-center gap-3">
             <img 
               src="/ChatGPT_Image_May_16_2025_05_08_10_PM.png" 
-              alt="CryoRevive Logo" 
+              alt="CryoRevive by Livnexa Logo" 
               className="h-10 w-auto"
             />
-            <span className="text-xl font-display font-bold">CryoRevive</span>
+            <span className="text-xl font-display font-bold">CryoRevive by Livnexa</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">

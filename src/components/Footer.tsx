@@ -10,10 +10,10 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <img 
                 src="/ChatGPT_Image_May_16_2025_05_08_10_PM.png" 
-                alt="CryoRevive Logo" 
+                alt="CryoRevive by Livnexa Logo" 
                 className="h-10 w-auto"
               />
-              <span className="text-xl font-display font-bold">CryoRevive</span>
+              <span className="text-xl font-display font-bold">CryoRevive by Livnexa</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Elite recovery facility for athletes. Cold plunge, steam sauna, and contrast therapy.
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} CryoRevive. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CryoRevive by Livnexa. All rights reserved.</p>
         </div>
       </div>
     </footer>

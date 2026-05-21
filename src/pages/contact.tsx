@@ -6,14 +6,19 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MessageCircle, Calendar, Clock, Users, MapPin } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Phone, Mail, MessageCircle, Calendar as CalendarIcon, Clock, Users, MapPin } from "lucide-react";
 import Link from "next/link";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const AVAILABLE_DAYS = [
   "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
 ];
 
 const TIME_SLOTS = [
+  "05:00 AM - 06:00 AM",
   "06:00 AM - 08:00 AM",
   "08:00 AM - 10:00 AM", 
   "10:00 AM - 12:00 PM",
@@ -30,6 +35,7 @@ export default function Contact() {
   const [eventType, setEventType] = useState("");
   const [expectedAthletes, setExpectedAthletes] = useState("");
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [eventDate, setEventDate] = useState<Date>();
 
   useEffect(() => {
     const user = localStorage.getItem("current_user");
@@ -45,7 +51,7 @@ export default function Contact() {
       id: Date.now().toString(),
       eventName: (e.target as any).eventName.value,
       eventType,
-      eventDate: (e.target as any).eventDate.value,
+      eventDate: eventDate ? format(eventDate, "yyyy-MM-dd") : "",
       eventTime: selectedTime,
       location: (e.target as any).eventLocation.value,
       athleteCount: parseInt(expectedAthletes),
@@ -64,7 +70,7 @@ export default function Contact() {
       key: "YOUR_RAZORPAY_KEY_ID", // Replace with actual Razorpay key
       amount: bookingData.totalAmount * 100,
       currency: "INR",
-      name: "CryoRevive",
+      name: "CryoRevive by Livnexa",
       description: `Event Recovery Session - ${bookingData.eventName}`,
       image: "/favicon.ico",
       handler: function (response: any) {
@@ -181,15 +187,32 @@ export default function Contact() {
                             </select>
                           </div>
                           <div className="space-y-2">
-                            <label htmlFor="eventDate" className="text-sm font-semibold text-foreground">
+                            <label className="text-sm font-semibold text-foreground">
                               Event Date *
                             </label>
-                            <Input 
-                              id="eventDate"
-                              type="date" 
-                              className="bg-background border-border"
-                              required
-                            />
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  className={cn(
+                                    "w-full justify-start text-left font-normal",
+                                    !eventDate && "text-muted-foreground"
+                                  )}
+                                >
+                                  <CalendarIcon className="mr-2 h-4 w-4" />
+                                  {eventDate ? format(eventDate, "PPP") : <span>Pick a date</span>}
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0" align="start">
+                                <Calendar
+                                  mode="single"
+                                  selected={eventDate}
+                                  onSelect={setEventDate}
+                                  initialFocus
+                                  disabled={(date) => date < new Date()}
+                                />
+                              </PopoverContent>
+                            </Popover>
                           </div>
                         </div>
 
