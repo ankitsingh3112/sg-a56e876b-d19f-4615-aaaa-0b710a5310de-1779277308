@@ -6,12 +6,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Phone, Mail, MessageCircle, Calendar as CalendarIcon, Clock, Users, MapPin } from "lucide-react";
+import { Phone, Mail, MessageCircle, Calendar, Clock, Users, MapPin } from "lucide-react";
 import Link from "next/link";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 
 const AVAILABLE_DAYS = [
   "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
@@ -35,7 +31,7 @@ export default function Contact() {
   const [eventType, setEventType] = useState("");
   const [expectedAthletes, setExpectedAthletes] = useState("");
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [eventDate, setEventDate] = useState<Date>();
+  const [eventDate, setEventDate] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
@@ -56,7 +52,7 @@ export default function Contact() {
       id: Date.now().toString(),
       eventName: (e.target as any).eventName.value,
       eventType,
-      eventDate: eventDate ? format(eventDate, "yyyy-MM-dd") : "",
+      eventDate: eventDate,
       eventTime: selectedTime,
       location: (e.target as any).eventLocation.value,
       athleteCount: parseInt(expectedAthletes),
@@ -136,7 +132,7 @@ export default function Contact() {
               } else {
                 // Reset form
                 (e.target as any).reset();
-                setEventDate(undefined);
+                setEventDate("");
                 setEventType("");
                 setSelectedDay("");
                 setSelectedTime("");
@@ -301,32 +297,18 @@ export default function Contact() {
                             </select>
                           </div>
                           <div className="space-y-2">
-                            <label className="text-sm font-semibold text-foreground">
+                            <label htmlFor="eventDate" className="text-sm font-semibold text-foreground">
                               Event Date *
                             </label>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  className={cn(
-                                    "w-full justify-start text-left font-normal",
-                                    !eventDate && "text-muted-foreground"
-                                  )}
-                                >
-                                  <CalendarIcon className="mr-2 h-4 w-4" />
-                                  {eventDate ? format(eventDate, "PPP") : <span>Pick a date</span>}
-                                </Button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0 bg-card border-border" align="start">
-                                <Calendar
-                                  mode="single"
-                                  selected={eventDate}
-                                  onSelect={setEventDate}
-                                  initialFocus
-                                  disabled={(date) => date < new Date()}
-                                />
-                              </PopoverContent>
-                            </Popover>
+                            <Input
+                              id="eventDate"
+                              type="date"
+                              value={eventDate}
+                              onChange={(e) => setEventDate(e.target.value)}
+                              min={new Date().toISOString().split('T')[0]}
+                              className="bg-background border-border"
+                              required
+                            />
                           </div>
                         </div>
 
