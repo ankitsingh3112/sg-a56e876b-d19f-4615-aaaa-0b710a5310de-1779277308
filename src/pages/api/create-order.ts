@@ -43,7 +43,7 @@ export default async function handler(
 
     res.status(200).json({
       orderId: order.id,
-      amount: order.amount,
+      amount: Number(order.amount),
       currency: order.currency,
     });
   } catch (error: any) {
