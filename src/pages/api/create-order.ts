@@ -35,7 +35,7 @@ export default async function handler(
 
     // Create order
     const order = await razorpay.orders.create({
-      amount: amount, // amount in paise
+      amount: Number(amount), // amount in paise
       currency: currency,
       receipt: receipt || `receipt_${Date.now()}`,
     });
