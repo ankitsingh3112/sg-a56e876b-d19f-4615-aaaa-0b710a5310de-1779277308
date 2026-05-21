@@ -1,26 +1,29 @@
 ---
-title: Booking Page
+title: Booking Page with Calendly Integration
 status: done
 priority: high
 type: feature
-tags: [booking, integration]
+tags: [booking, forms, integration]
 created_by: agent
-created_at: 2026-05-05T15:54:50Z
+created_at: 2026-05-21T04:11:31Z
 position: 4
 ---
 
 ## Notes
-Booking page with Calendly/TidyCal placeholder for easy integration. Payment section prepared for Razorpay/Stripe integration.
+Rebuilt booking page with two options: in-centre recovery sessions (Ice Bath, Sauna, Contrast Therapy) and mobile event bookings. Full Razorpay integration with tiered pricing.
 
 ## Checklist
-- [x] Create /booking page layout
-- [x] Add booking instructions and expectations
-- [x] Calendly/TidyCal embed placeholder with integration notes
-- [x] Phone and WhatsApp contact options
-- [x] "What to Expect" guidance section
-- [x] Payment integration placeholder (Razorpay/Stripe ready)
+- [x] Create booking.tsx page
+- [x] In-Centre Sessions tab (3 service options)
+- [x] Mobile Event Booking tab
+- [x] Razorpay payment integration for both
+- [x] Date/time selection for all services
+- [x] Tiered pricing for events
+- [x] Location and contact information
+- [x] Run check_for_errors
 
 ## Acceptance
-- Clear booking flow from service selection to calendar
-- Payment section ready for integration
-- Mobile-friendly calendar view
+- Users can book in-centre sessions (Ice Bath, Sauna, Contrast)
+- Users can book mobile event recovery services
+- Both booking types process payments via Razorpay
+- Pricing breakdown shows correctly for event bookings
