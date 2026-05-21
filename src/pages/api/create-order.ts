@@ -22,8 +22,9 @@ export default async function handler(
   try {
     const { amount, currency = "INR", receipt } = req.body;
 
-    // Validate amount (minimum 100 paise = 1 INR)
-    if (!amount || amount < 100) {
+    // Parse and validate amount (minimum 100 paise = 1 INR)
+    const amountNum = Number(amount);
+    if (!amountNum || amountNum < 100) {
       return res.status(400).json({ error: "Amount must be at least 100 paise (₹1)" });
     }
 
@@ -35,7 +36,7 @@ export default async function handler(
 
     // Create order
     const order = await razorpay.orders.create({
-      amount: Number(amount), // amount in paise
+      amount: amountNum,
       currency: currency,
       receipt: receipt || `receipt_${Date.now()}`,
     });
